@@ -1,56 +1,80 @@
-# Limousine Business Performance Dashboard (Power BI)
+## DAX Measures & Calculations
 
-##  Overview
-This project focuses on analyzing the performance of a limousine service business using Power BI. The dashboard provides insights into revenue, trips, pricing, and driver performance to support data-driven decision-making.
+This project uses DAX measures in Microsoft Power BI to calculate key business metrics related to revenue, operations, and profitability in a ride-hailing / limousine business.
 
-## Business Objective
-The goal of this project is to monitor key business metrics and identify opportunities to improve profitability, optimize operations, and enhance customer experience.
+###  Core KPIs
 
-## Tools & Technologies
-- Power BI  
-- DAX (Data Analysis Expressions)  
-- Data Modeling  
-- Data Visualization  
+Total Revenue
+Total Revenue = SUM(Trips[Fare_AED])
 
-## Key Metrics
-- Total Revenue  
-- Total Trips  
-- Average Fare  
-- ROI (%)  
-- Average Driver Rating  
+Total Trips
+Total Trips = COUNT(Trips[Trip_ID])
+
+Average Fare
+Avg Fare = AVERAGE(Trips[Fare_AED])
+
+Total Distance
+Total Distance = SUM(Trips[Distance_km])
 
 
-## Dashboard Features
+###  Revenue Analysis
 
-### Revenue Analysis
-- Revenue by car type (SUV, Luxury, Sedan)  
-- Revenue distribution across platforms (Uber, Careem, Direct)  
+Revenue per Car Type
+Revenue per Car Type = SUM(Trips[Fare_AED])
 
-### Time Analysis
-- Revenue trends by hour  
-- Trips distribution across days  
-- Identification of peak demand hours  
+Revenue per Platform
+Revenue per Platform = SUM(Trips[Fare_AED])
 
-### Vehicle Performance
-- Revenue vs Cost vs Profit comparison  
-- Profitability analysis by car type  
-- ROI tracking  
 
-### Driver Performance
-- Top drivers by revenue  
-- Driver ratings vs revenue correlation  
-- Trip-level performance insights  
+###  Time-Based Analysis
 
-## Key Insights
-- SUVs generate the highest total revenue, while luxury vehicles yield higher revenue per trip  
-- Peak demand occurs between 6 PM and 10 PM, indicating optimal pricing opportunities  
-- Higher-rated drivers tend to generate more revenue, showing a strong relationship between service quality and earnings  
-- Platform dependency is significant, with major contribution from ride-hailing services  
+Hour (Calculated Column)
+Hour = HOUR(TIMEVALUE(Trips[Time]))
 
-## Files Included
-- Power BI Dashboard (.pbix)  
-- Dataset (CSV/Excel)  
-- Dashboard screenshots
+Revenue by Hour
+Revenue by Hour = SUM(Trips[Fare_AED])
 
-## Outcome
-This project demonstrates the ability to transform raw data into meaningful insights through interactive dashboards. It highlights skills in data visualization, business analysis, and performance tracking.
+Trips per Day
+Trips per Day = COUNT(Trips[Trip_ID])
+
+
+###  Vehicle Cost & Profitability
+
+Monthly Cost
+Monthly Cost = SUM(Vehicle_Cost[Monthly_Cost_AED])
+
+Revenue by Car
+Revenue by Car = SUM(Trips[Fare_AED])
+
+Profit
+Profit = [Total Revenue] - [Monthly Cost]
+
+ROI %
+ROI % = DIVIDE([Profit], [Monthly Cost], 0)
+
+
+###  Advanced Metrics
+
+Average Rating
+Avg Rating = AVERAGE(Trips[Customer_Rating])
+
+Revenue per Trip
+Revenue per Trip = DIVIDE([Total Revenue], [Total Trips], 0)
+
+Driver Rank
+Driver Rank =  RANKX(     ALL(Trips[Driver_ID]),     [Total Revenue],     ,     DESC )
+
+
+##  Notes & Assumptions
+
+- Revenue is calculated using trip fare in AED.
+- Monthly vehicle cost is treated as a fixed cost per car type.
+- ROI is calculated as Profit divided by Monthly Cost.
+- Time-based analysis is performed using extracted hourly data.
+
+
+##  Limitations
+
+- Dataset is simulated and may not reflect real-world variability.
+- Monthly cost is not allocated per trip (simplified assumption).
+- External factors like fuel, maintenance, and driver incentives are not included.
