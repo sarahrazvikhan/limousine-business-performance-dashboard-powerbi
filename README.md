@@ -54,8 +54,3 @@ The goal of this project is to monitor key business metrics and identify opportu
 
 ## Outcome
 This project demonstrates the ability to transform raw data into meaningful insights through interactive dashboards. It highlights skills in data visualization, business analysis, and performance tracking.
-
----
-
-## Contact
-Feel free to connect with me on LinkedIn for feedback or opportunities.
